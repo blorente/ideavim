@@ -1,6 +1,7 @@
 *.swp
 /.gradle/
 /.intellijPlatform/
+__bl
 
 /.idea/
 !/.idea/scopes
