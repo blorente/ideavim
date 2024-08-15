@@ -37,6 +37,8 @@ dependencies {
 val releaseType: String? by project
 
 tasks {
+  // BL: Hack: FOr every task of type jar, like org.jetbrains.intellij.platform.gradle.tasks.InstrumentedJarTask, cache it unconditionally.
+  withType<Jar>().configureEach { outputs.cacheIf { true } }
   compileKotlin {
     kotlinOptions {
       freeCompilerArgs = listOf("-Xjvm-default=all-compatibility")

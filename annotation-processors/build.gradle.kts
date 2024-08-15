@@ -28,3 +28,8 @@ dependencies {
     exclude("org.jetbrains.kotlin", "kotlin-stdlib-common")
   }
 }
+
+tasks {
+  // BL: Hack: FOr every task of type jar, like org.jetbrains.intellij.platform.gradle.tasks.InstrumentedJarTask, cache it unconditionally.
+  withType<Jar>().configureEach { outputs.cacheIf { true } }
+}
