@@ -30,6 +30,5 @@ dependencies {
 }
 
 tasks {
-  // BL: Hack: FOr every task of type jar, like org.jetbrains.intellij.platform.gradle.tasks.InstrumentedJarTask, cache it unconditionally.
-//  withType<Jar>().configureEach { outputs.cacheIf { true } }
+  withType<Jar>().configureEach { outputs.cacheIf("BL: Hack: For every task of type jar, like org.jetbrains.intellij.platform.gradle.tasks.InstrumentedJarTask, cache it unconditionally.", {true}) }
 }

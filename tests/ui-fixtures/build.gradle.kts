@@ -26,6 +26,7 @@ dependencies {
 }
 
 tasks {
+  withType<Jar>().configureEach { outputs.cacheIf("BL: Hack: For every task of type jar, like org.jetbrains.intellij.platform.gradle.tasks.InstrumentedJarTask, cache it unconditionally.", {true}) }
   // This task is disabled because it should be excluded from `gradle test` run (because it's slow)
   // I didn't find a better way to exclude except disabling and defining a new task with a different name
   test {

@@ -148,6 +148,9 @@ dependencies {
   // https://mvnrepository.com/artifact/org.mockito.kotlin/mockito-kotlin
   testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
 
+  testImplementation("junit:junit:4.12")
+  testFixturesImplementation("junit:junit:4.12")
+
   testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.3")
   testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.3")
   testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.3")
@@ -163,14 +166,10 @@ configurations {
 }
 
 intellijPlatformTesting {
-//  runIde
-//  testIde
   testIdeUi
-//  testIdePerformance
 }
 tasks {
   withType<Jar>().configureEach { outputs.cacheIf("BL: Hack: For every task of type jar, like org.jetbrains.intellij.platform.gradle.tasks.InstrumentedJarTask, cache it unconditionally.", {true}) }
-//  withType<PrepareSandboxTask>().configureEach { outputs.cacheIf("BL: Prepare sandbox task creates the plugin config dir as a \"side effect\", so we always want it to run because we don't want to fix the task for now.",  {false}) }
   test {
     useJUnitPlatform()
 
@@ -271,7 +270,6 @@ tasks {
 //    systemProperty("octopus.handler", System.getProperty("octopus.handler") ?: true)
 //  }
   val testIdeUi by intellijPlatformTesting.testIdeUi.registering {
-//    type = Inte.PhpStorm
 //    type = TestIdeUiTask
     task {
       systemProperty("robot-server.port", "8082")
