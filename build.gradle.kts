@@ -70,7 +70,7 @@ plugins {
   kotlin("jvm") version "1.9.22"
   application
   id("java-test-fixtures")
-  id("org.jetbrains.intellij.platform") version "2.0.0-beta8"
+  id("org.jetbrains.intellij.platform") version "2.0.1"
   id("org.jetbrains.changelog") version "2.2.1"
   id("org.jetbrains.kotlinx.kover") version "0.6.1"
   id("com.dorongold.task-tree") version "4.0.0"
@@ -163,7 +163,7 @@ configurations {
 
 tasks {
   withType<Jar>().configureEach { outputs.cacheIf("BL: Hack: For every task of type jar, like org.jetbrains.intellij.platform.gradle.tasks.InstrumentedJarTask, cache it unconditionally.", {true}) }
-  withType<PrepareSandboxTask>().configureEach { outputs.cacheIf("BL: Prepare sandbox task creates the plugin config dir as a \"side effect\", so we always want it to run because we don't want to fix the task for now.",  {false}) }
+//  withType<PrepareSandboxTask>().configureEach { outputs.cacheIf("BL: Prepare sandbox task creates the plugin config dir as a \"side effect\", so we always want it to run because we don't want to fix the task for now.",  {false}) }
   test {
     useJUnitPlatform()
 
