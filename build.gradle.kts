@@ -34,6 +34,7 @@ import org.intellij.markdown.ast.getTextInNode
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 import org.jetbrains.intellij.platform.gradle.tasks.PrepareSandboxTask
+import org.jetbrains.intellij.platform.gradle.tasks.TestIdeUiTask
 import org.jetbrains.intellij.platform.gradle.tasks.aware.SplitModeAware
 import org.kohsuke.github.GHUser
 import java.net.HttpURLConnection
@@ -161,6 +162,12 @@ configurations {
   }
 }
 
+intellijPlatformTesting {
+//  runIde
+//  testIde
+  testIdeUi
+//  testIdePerformance
+}
 tasks {
   withType<Jar>().configureEach { outputs.cacheIf("BL: Hack: For every task of type jar, like org.jetbrains.intellij.platform.gradle.tasks.InstrumentedJarTask, cache it unconditionally.", {true}) }
 //  withType<PrepareSandboxTask>().configureEach { outputs.cacheIf("BL: Prepare sandbox task creates the plugin config dir as a \"side effect\", so we always want it to run because we don't want to fix the task for now.",  {false}) }
@@ -237,14 +244,44 @@ tasks {
   // Start the default IDE with both IdeaVim and the robot server plugin installed, ready to run a UI test task. The
   // robot server plugin is automatically added as a dependency to this task, and Gradle will take care of downloading.
   // Note that the CustomTestIdeUiTask can be used to run tests against a different IDE
-  testIdeUi {
-    systemProperty("robot-server.port", "8082")
-    systemProperty("ide.mac.message.dialogs.as.sheets", "false")
-    systemProperty("jb.privacy.policy.text", "<!--999.999-->")
-    systemProperty("jb.consents.confirmation.enabled", "false")
-    systemProperty("ide.show.tips.on.startup.default.value", "false")
+//  val runIdeForUiTests by intellijPlatformTesting.runIde.registering {
+//    task {
+//
+//      systemProperty("robot-server.port", "8082")
+//      systemProperty("ide.mac.message.dialogs.as.sheets", "false")
+//      systemProperty("jb.privacy.policy.text", "<!--999.999-->")
+//      systemProperty("jb.consents.confirmation.enabled", "false")
+//      systemProperty("ide.show.tips.on.startup.default.value", "false")
+//
+//      systemProperty("octopus.handler", System.getProperty("octopus.handler") ?: true)
+//
+//    }
+//
+////    plugins {
+////      robotServerPlugin()
+////    }
+//  }
+//  testIdeUi {
+//    systemProperty("robot-server.port", "8082")
+//    systemProperty("ide.mac.message.dialogs.as.sheets", "false")
+//    systemProperty("jb.privacy.policy.text", "<!--999.999-->")
+//    systemProperty("jb.consents.confirmation.enabled", "false")
+//    systemProperty("ide.show.tips.on.startup.default.value", "false")
+//
+//    systemProperty("octopus.handler", System.getProperty("octopus.handler") ?: true)
+//  }
+  val testIdeUi by intellijPlatformTesting.testIdeUi.registering {
+//    type = Inte.PhpStorm
+//    type = TestIdeUiTask
+    task {
+      systemProperty("robot-server.port", "8082")
+      systemProperty("ide.mac.message.dialogs.as.sheets", "false")
+      systemProperty("jb.privacy.policy.text", "<!--999.999-->")
+      systemProperty("jb.consents.confirmation.enabled", "false")
+      systemProperty("ide.show.tips.on.startup.default.value", "false")
 
-    systemProperty("octopus.handler", System.getProperty("octopus.handler") ?: true)
+      systemProperty("octopus.handler", System.getProperty("octopus.handler") ?: true)
+    }
   }
 
   // Add plugin open API sources to the plugin ZIP
