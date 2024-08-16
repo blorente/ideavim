@@ -1,5 +1,6 @@
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 import org.jetbrains.intellij.platform.gradle.extensions.intellijPlatform
+import org.jetbrains.intellij.platform.gradle.tasks.PrepareSandboxTask
 
 plugins {
   java
@@ -39,8 +40,8 @@ intellijPlatform {
 }
 
 tasks {
-  // BL: Hack: FOr every task of type jar, like org.jetbrains.intellij.platform.gradle.tasks.InstrumentedJarTask, cache it unconditionally.
-  withType<Jar>().configureEach { outputs.cacheIf { true } }
+  withType<Jar>().configureEach { outputs.cacheIf("BL: Hack: For every task of type jar, like org.jetbrains.intellij.platform.gradle.tasks.InstrumentedJarTask, cache it unconditionally.", {true}) }
+  withType<PrepareSandboxTask>().configureEach { outputs.cacheIf("BL: Prepare sandbox task creates the plugin config dir as a \"side effect\", so we always want it to run because we don't want to fix the task for now.",  {false}) }
   // This task is disabled because it should be excluded from `gradle test` run (because it's slow)
   // I didn't find a better way to exclude except disabling and defining a new task with a different name
   // Note that useJUnitTestPlatform() is required to prevent red code
